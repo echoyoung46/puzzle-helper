@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Puzzle Helper</title>
+</head>
+
+<body>
+  <img src="src/5b.png" alt="">
+  <script>
+    function getBase64Image(img) {
+      // Create an empty canvas element
+      var canvas = document.createElement("canvas");
+      canvas.width = img.width;
+      canvas.height = img.height;
+
+      // Copy the image contents to the canvas
+      var ctx = canvas.getContext("2d");
+      ctx.drawImage(img, 0, 0);
+
+      // Get the data-URL formatted image
+      // Firefox supports PNG and JPEG. You could check img.src to
+      // guess the original format, but be aware the using "image/jpg"
+      // will re-encode the image.
+      var dataURL = canvas.toDataURL("image/png");
+      return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
+    }
+
+    var a_base64, b_base64;
+
+    function init() {
+      var a = new Image(),
+        b = new Image();
+      a.src = 'src/5a.png';
+      b.src = 'src/5b.png';
+
+      a.onload = function () {
+        a_base64 = getBase64Image(a);
+        console.log(a);
+        console.log(a_base64);
+
+        if (a_base64.indexOf(b_base64) > -1) {
+          console.log('match');
+        } else {
+          console.log('not match');
+        }
+      }
+
+      b.onload = function () {
+        b_base64 = getBase64Image(b);
+        console.log(b);
+        console.log(b_base64);
+      }
+    }
+
+    window.onload = init;
+  </script>
+</body>
+
+</html>
